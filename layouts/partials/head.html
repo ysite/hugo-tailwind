@@ -1,0 +1,16 @@
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ block "title" . }}{{- .Title }} - {{ .Site.Title -}} {{ end }}</title>
+    {{ with .Params.Author }}
+    <meta name="author" content="{{ . }}" />
+    {{ end }}
+    <meta name="description" content="{{ with .Params.Description }}{{ . }}{{ else }}{{ .Site.Params.Description }}{{ end }}" />
+    <meta name="keywords" content="{{ with .Params.Keywords }}{{ . }}{{ else }}{{ .Site.Params.Keywords }}{{ end }}" />
+    {{ partialCached "css.html" . }}
+    <script type="module" async>
+        {{- $js := resources.Get "js/theme-manager.js"  | js.Build (dict "minify" "true" "format" .Site.Params.Jsformat ) -}}
+        import {getThemeState} from "{{ $js.RelPermalink }}";
+        getThemeState();
+    </script>
+</head>

@@ -1,0 +1,49 @@
+<header class="w-screen px-6 py-6 mx-auto max-w-screen-2xl sm:px-7 xl:px-8 2xl:px-10">
+    <nav class="flex flex-wrap items-center justify-between">
+        <a href="{{ .Site.Home.Permalink }}" class="flex items-center font-bold text-slate-800 dark:text-slate-200">
+            {{ .Site.Title }}
+        </a>
+
+        <input id="nav-toggle" type=checkbox class="hidden">
+        <label id="show-button" for="nav-toggle"
+            class="flex items-center sm:hidden text-slate-600 dark:text-slate-400 hover:text-sky-500">
+            {{ partialCached "svg/menu-open.svg"
+                (dict "title" "Menu Open" "id" "theme-toggle-dark" "class" "w-4 h-4 fill-current" "viewBox" "0 0 20 20" ) }}
+        </label>
+        <label id="hide-button" for="nav-toggle" class="items-center hidden text-gray-700 hover:text-blue-500">
+            {{ partialCached "svg/menu-close.svg"
+                (dict "title"  "Menu Close" "id" "theme-toggle-dark" "class" "w-4 h-4 fill-current" "viewBox" "0 0 20 20" ) }}
+        </label>
+
+        <ul id="nav-menu" class="hidden w-full mt-2 sm:flex sm:w-auto sm:mt-0 sm:space-x-2">
+            {{ with .Site.GetPage "/about" }}
+            <li>
+                <a href="{{ .Permalink }}" class="hover:text-sky-500 dark:hover:text-sky-500">{{ .Title }}</a>
+            </li>
+            {{ end }}
+            {{ range .Site.Sections }}
+            <li>
+                <a href="{{ .Permalink }}" class="hover:text-sky-500 dark:hover:text-sky-500">{{ .Title }}</a>
+            </li>
+            {{ end }}
+            <li>
+                <label class="sr-only">Theme</label>
+                <button type="button" id="theme-toogle" class="py-1 hover:text-sky-500 dark:hover:text-sky-500"
+                    onclick="window.tm.changeTheme()">
+                    {{ partialCached "svg/theme-toggle-dark.svg"
+                        (dict "id" "theme-toggle-dark" "class" "hidden w-4 h-4" "fill" "currentColor" "viewBox" "0 0 32 32" ) }}
+                    {{ partialCached "svg/theme-toggle-light.svg"
+                        (dict "id" "theme-toggle-light" "class" "hidden w-4 h-4" "fill" "currentColor" "viewBox" "0 0 32 32" ) }}
+                    {{ partialCached "svg/theme-toggle-system.svg"
+                        (dict "id" "theme-toggle-system" "class" "hidden w-4 h-4" "fill" "currentColor" "viewBox" "0 0 32 32" ) }}
+                </button>
+            </li>
+        </ul>
+    </nav>
+
+    <script type="module" async>
+        import {ThemeManager} from './js/theme-manager.js';
+        window.tm = new ThemeManager();
+        window.onload = window.tm.setupThemeIndicator();
+    </script>
+</header>
