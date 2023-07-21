@@ -1,11 +1,11 @@
 {{ if .Site.IsServer }}
 <button id="container-menu" onclick="changeContainerVisibility()"
-    class="w-8 h-8 mb-2 block rounded-full text-slate-600 text-sm bg-slate-200 uppercase pointer-events-auto">
+    class="block w-6 h-6 -mb-1 text-xs text-blue-600 uppercase bg-blue-200 rounded-full pointer-events-auto opacity-40">
     <span>C</span>
 </button>
 
 <div id="container-area"
-    class="fixed inset-0 top-0 -z-50 container mx-auto h-full bg-red-200 bg-opacity-25 pointer-events-none hidden">
+    class="container fixed inset-0 top-0 hidden h-full mx-auto bg-gray-400 pointer-events-none bg-opacity-10 -z-50">
     <p></p>
 </div>
 
