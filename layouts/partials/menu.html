@@ -1,0 +1,51 @@
+{{- $page := .page }}
+{{- $menuID := .menuID }}
+
+<div id="nav-container" class="flex flex-row-reverse">
+
+  {{- with index site.Menus $menuID }}
+  <input id="menu-toggle" type=checkbox class="hidden">
+
+  <ul id="nav-menu" class="menu-main">
+    {{- partial "inline/menu/walk.html" (dict "page" $page "menuEntries" .) }}
+  </ul>
+
+  <label id="menu-open" for="menu-toggle" class="flex md:hidden">
+      {{ partialCached "svg/menu-open.svg"
+          (dict "title" "Open Menu" "class" "w-4 h-4 fill-current" "viewBox" "0 0 20 20" ) }}
+  </label>
+  <label id="menu-close" for="menu-toggle" class="z-10 hidden">
+      {{ partialCached "svg/menu-close.svg"
+          (dict "title" "Close Menu" "class" "w-4 h-4 fill-current" "viewBox" "0 0 20 20" ) }}
+  </label>
+
+  {{- end }}
+  </div>
+
+{{- define "partials/inline/menu/walk.html" }}
+  {{- $page := .page }}
+  {{- range .menuEntries }}
+    {{- $attrs := dict "href" .URL }}
+
+    {{- if $page.IsMenuCurrent .Menu . }}
+      {{- $attrs = merge $attrs (dict "class" "active" "aria-current" "page") }}
+    {{- else if $page.HasMenuCurrent .Menu .}}
+      {{- $attrs = merge $attrs (dict "class" "ancestor" "aria-current" "true") }}
+    {{- end }}
+
+    <li {{- if .HasChildren }} class="relative group"{{ end }}>
+      <a
+      {{- if .Parent }}
+        class="menu-sub-item"
+      {{- else }}
+        class="menu-item"
+      {{- end -}}
+      {{- range $k, $v := $attrs }} {{- with $v }} {{- printf " %s=%q" $k $v | safeHTMLAttr }} {{- end }} {{- end -}} >{{ or (T .Identifier) .Name | safeHTML }}</a>
+      {{ if .HasChildren }}<ul class="menu-sub">{{- end }}
+      {{- with .Children }}
+          {{- partial "inline/menu/walk.html" (dict "page" $page "menuEntries" .) }}
+      {{- end }}
+      {{- if .HasChildren }} </ul> {{ end }}
+    </li>
+  {{- end }}
+{{- end }}

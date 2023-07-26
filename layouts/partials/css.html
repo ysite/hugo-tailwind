@@ -1,7 +1,23 @@
 {{- $styles := resources.Get "css/styles.css" | postCSS (dict "config" "./assets/css/postcss.config.js") -}}
 {{- if .Site.IsServer -}}
-{{- $styles = $styles | resources.ExecuteAsTemplate (printf "css/styles.dev.%v.css" now.UnixMilli) . -}}
+    {{- $styles = $styles | resources.ExecuteAsTemplate (printf "css/styles.dev.%v.css" now.UnixMilli) . -}}
 {{- else -}}
-{{- $styles = $styles | minify | fingerprint | resources.PostProcess -}}
+    {{- $styles = $styles | minify | fingerprint | resources.PostProcess -}}
 {{- end -}}
     <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
+{{- if .Site.Params.load_fonts -}}
+    {{- $fonts := slice -}}
+    {{- range .Site.Params.load_fonts -}}
+        {{- $family := replace (index (.) 0) " " "+" -}}
+        {{- $weights := replace (index (.) 1) " " "" -}}
+        {{- $string := print $family ":" $weights -}}
+        {{- $fonts = $fonts | append $string -}}
+    {{- end -}}
+    {{- $url_part := printf "//fonts.googleapis.com/css?family=%s" (delimit $fonts "|") | safeHTMLAttr }}
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="style" {{ printf "href=\" %s&display=swap\"" $url_part | safeHTMLAttr }} />
+    <link rel="stylesheet" {{ printf "href=\"%s&display=swap\" media=\"print\" onload=\"this.media='all'\"" $url_part | safeHTMLAttr }} />
+    <noscript>
+        <link rel="stylesheet" {{printf "href=\"%s&display=swap\"" $url_part | safeHTMLAttr}} />
+    </noscript>
+{{- end -}}

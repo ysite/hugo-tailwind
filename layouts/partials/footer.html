@@ -1,7 +1,15 @@
-<footer class="bottom-0 w-full p-4 text-xs text-center border-t text-slate-500 border-slate-200 dark:border-slate-700">
+<footer class="bottom-0 w-full p-2 text-xs text-center text-slate-500">
   <p>
-    <small>
-      {{ replace (replace site.Params.Copyright "{year}" (now.Format "2006")) "{title}" site.Title }}
+    <small class="font-extralight text-slate-400 dark:text-slate-600">
+      {{ replace (replace site.Copyright "{year}" (now.Format "2006")) "{title}" site.Title }}
     </small>
   </p>
 </footer>
+
+{{- $js := resources.Get "/js/theme-manager.js" | js.Build (dict "minify" "true" "format" .Site.Params.Jsformat ) }}
+<script type="module" async>
+  import { ThemeManager } from "{{ $js.RelPermalink }}";
+  window.tm = new ThemeManager();
+  let lfn = window.onload; window.onload = () => {if (lfn) lfn(); window.tm.setupThemeIndicator();};
+
+</script>

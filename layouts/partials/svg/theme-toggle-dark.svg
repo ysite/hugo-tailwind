@@ -1,4 +1,4 @@
 <svg id="{{ .id }}" class="{{ .class }}" fill="{{ .fill }}" viewBox="{{ .viewBox }}" xmlns="http://www.w3.org/2000/svg">
-    <title>Dark theme icon (moon)</title>
+    <title>Switch to dark theme</title>
     <path d="M7.067 3.087a5 5 0 005.466 7.026A5 5 0 117.067 3.087z"></path>
 </svg>

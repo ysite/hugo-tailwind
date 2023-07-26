@@ -1,0 +1,14 @@
+{{ define "main" }}
+    <div class="px-2 mx-auto mb-16 prose sm:px-4 md:px-0 lg:prose-lg dark:prose-invert prose-slate justify-self-center">
+        <h1>
+            {{ .Title }}
+        </h1>
+    </div>
+    <div class="flex flex-col xl:flex-row">
+        <article class="max-w-4xl mx-auto mb-16 prose lg:prose-lg dark:prose-invert prose-slate justify-self-center sm:px-4 md:px-0 hover:prose-a:text-cyan-500">
+            {{ .Content }}
+        </article>
+        {{ partial "sections/calendar.html" . }}
+    </div>
+    <!-- {{ partial "menu.html" (dict "menuID" "footer" "page" .) }} -->
+{{ end }}
