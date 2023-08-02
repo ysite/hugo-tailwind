@@ -1,0 +1,65 @@
+{{ $title := .Get "title" }}
+{{ $phone := .Get "phone" }}
+{{ $mail := .Get "mail" }}
+{{ $linkedin := .Get "linkedin" }}
+
+  <hr />
+
+  <form action='{{ .Get "form" }}' method="post">
+    <div class="grid max-w-full grid-flow-row grid-cols-1 mt-10 lg:max-w-5xl lg:grid-cols-2 gap-y-2 lg:gap-x-6 lg:gap-y-8">
+      <label for="name" class="block text-sm font-medium leading-6 text-slate-800 dark:text-slate-200">Name</label>
+      <input name="name" type="text" required
+        class="block w-full rounded-md border-0 py-1.5 text-slate-800 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-cyan-600 sm:text-sm sm:leading-6">
+      <label for="email" class="block text-sm font-medium leading-6 text-slate-800 dark:text-slate-200">Contact
+        e-mail</label>
+      <input name="email" type="text" required
+        class="block w-full rounded-md border-0 py-1.5 text-slate-800 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-cyan-600 sm:text-sm sm:leading-6">
+      <label for="number" class="block text-sm font-medium leading-6 text-slate-800 dark:text-slate-200">Contact
+        number</label>
+      <input name="number" type="text" required
+        class="block w-full rounded-md border-0 py-1.5 text-slate-800 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-cyan-600 sm:text-sm sm:leading-6">
+    </div>
+    <button type="submit"
+      class="my-6 rounded-md dark:bg-slate-500 bg-slate-300 px-2.5 py-1.5 text-sm font-semibold shadow-sm ring-1 ring-inset ring-gray-500 dark:ring-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800">Submit</button>
+  </form>
+
+  <hr/>
+
+  <h1>{{ $title }}</h1>
+    <div class="grid grid-flow-row grid-cols-2 mt-10 gap-x-6 gap-y-8">
+      <div>
+        {{ partialCached "svg/contact/phone.svg"
+          (dict "id" "contact-phone" "class" "w-12 h-12 text-slate-800 dark:text-slate-200 fill-current" "viewBox" "0 0 128 128" )
+        }}
+      </div>
+      <div>{{ partial "partials/inline/contact/cloak.html" ( dict "address" $phone ) }}</div>
+
+      <div>
+        {{ partialCached "svg/contact/mail.svg"
+          (dict "id" "contact-mail" "class" "w-12 h-12 text-slate-800 dark:text-slate-200 fill-current" "viewBox" "0 0 128 128" )
+        }}
+      </div>
+      <div>{{ partial "partials/inline/contact/cloak.html" ( dict "address" $mail ) }}</div>
+
+      <div>
+        {{ partialCached "svg/contact/linkedin.svg"
+          (dict "id" "contact-linkedin" "class" "w-12 h-12 text-slate-800 dark:text-slate-200 fill-current" "viewBox" "0 0 128 128" )
+        }}
+      </div>
+      <div><a href="{{ $linkedin }}">LinkedIn: {{ $title }}</a></div>
+    </div>
+
+{{- define "partials/inline/contact/cloak.html" }}
+
+  {{- $address := .address | default 0 -}}
+  {{- $parts := split $address "@" -}}
+  {{- $user := (index $parts 0) -}}
+  {{- $domain := (index $parts 1) | default "" -}}
+
+  <div class="{{ with $domain }} data-d {{ else }} data-u {{ end }}">
+    <span {{ with $domain -}}
+      data-d=" {{- range $index := seq (sub (len $domain) 1) 0 -}} {{- substr $domain $index 1 -}} {{- end -}}" {{- end }}
+      data-u="{{- range $index := seq (sub (len $user) 1) 0 -}}{{- substr $user $index 1 -}}{{- end }}"></span>
+  </div>
+
+{{- end }}
