@@ -3,10 +3,10 @@ const plugin = require('tailwindcss/plugin')
 module.exports = {
   darkMode: 'class',
   content: [
-    "./themes/**/layouts/**/*.html",
-    "./content/**/layouts/**/*.html",
-    "./layouts/**/*.html",
-    "./content/**/*.html"
+    "./themes/**/layouts/**/*.{html,md}",
+    "./content/**/layouts/**/*.{html,md}",
+    "./layouts/**/*.{html,md}",
+    "./content/**/*.{html,md}"
   ],
   theme: {
     extend: {
@@ -31,9 +31,6 @@ module.exports = {
     plugin(function ({ addBase, theme }) {
       addBase({
         'html': { fontSize: "16px" },
-        'h1': { fontFamily: theme('fontFamily.serif'), letterSpacing: theme('letterSpacing.widest')},
-        'h2': { fontFamily: theme('fontFamily.serif'), letterSpacing: theme('letterSpacing.widest') },
-        'h3': { fontFamily: theme('fontFamily.serif'), letterSpacing: theme('letterSpacing.wider') },
       })
     })
   ]
