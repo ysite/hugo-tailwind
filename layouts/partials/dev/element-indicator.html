@@ -1,0 +1,28 @@
+{{ if .Site.IsServer }}
+<button id="container-menu" onclick="toggleElementBorder()"
+  class="block w-6 h-6 text-xs text-black uppercase border border-black rounded-full pointer-events-auto dark:border-white dark:text-white">
+  <span>E</span>
+</button>
+
+<script>
+  const toggleElementBorder = () => {
+    const elements = document.querySelectorAll('*');
+
+    elements.forEach(element => {
+      if (element.classList.contains("e-element")) {
+        element.classList.remove('e-element');
+      } else {
+        element.classList.add('e-element');
+      }
+    });
+  }
+
+  window.onload = document.head.insertAdjacentHTML(
+    "beforeend",
+    `<style>
+      .debug { border-width: 1px; border-color: rgb(59 130 246); }
+      .e-element:hover { border-width: 1px; border-color: rgb(236 72 153); }
+    </style>`
+  );
+</script>
+{{ end }}
