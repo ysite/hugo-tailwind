@@ -1,0 +1,9 @@
+{{ $bg_class := .Get "bg_class" }}
+{{ $ctr_class := .Get "ctr_class" }}
+{{ $img_class := .Get "img_class" }}
+{{ $src := .Get "src" }}
+
+<div class="relative overflow-hidden {{ $ctr_class }}">
+    <div class="animate-[pivot_8s_linear_infinite] absolute -z-10 {{ $bg_class }}"></div>
+    <img class="{{ $img_class }}" src="{{ $src }}" >
+</div>

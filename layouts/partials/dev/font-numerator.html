@@ -1,0 +1,26 @@
+{{ if .Site.IsServer }}
+<button id="container-menu" onclick="logFonts()"
+  class="block w-6 h-6 text-xs text-black uppercase border border-black rounded-full pointer-events-auto dark:border-white dark:text-white">
+  <span>F</span>
+</button>
+
+<script>
+  const logFonts = () => {
+    console.log(listFonts());
+  }
+  const listFonts = () => {
+    let fonts = []
+    for (let node of document.querySelectorAll('*')) {
+      if (!node.style) continue
+
+      for (let pseudo of ['', ':before', ':after']) {
+        let fontFamily = getComputedStyle(node, pseudo).fontFamily
+        let fontWeight = getComputedStyle(node, pseudo).fontWeight
+        fonts = fonts.concat(fontFamily.split(",", 1), fontWeight)
+      }
+    }
+    return [...new Set(fonts)]
+      .map(font => font.replace(/^\s*['"]([^'"]*)['"]\s*$/, '$1').trim())
+  }
+</script>
+{{ end }}

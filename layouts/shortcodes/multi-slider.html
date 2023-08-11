@@ -1,0 +1,21 @@
+{{/* https://codepen.io/studiojvla/pen/qVbQqW */}}
+{{/* https://codepen.io/t_afif/pen/PoedrGY  */}}
+{{ $title := .Get "title" }}
+{{ $tit_class := .Get "class" }}
+
+{{ $bg_class := .Get "bg_class" }}
+{{ $ctr_class := .Get "ctr_class" }}
+{{ $img_class := .Get "img_class" }}
+{{ $src := (shuffle (resources.Match (.Get "src" ))) }}
+
+<div class="relative overflow-hidden {{ $ctr_class }}">
+  <h4 class="mb-6 text-center {{$tit_class}}">{{$title}}</h4>
+  <div class="flex animate-[multi_120s_linear_infinite]">
+  {{ range $item := $src }}
+    <div class="mx-4 lg:mx-6">
+      <div class="w-[180px] h-0"></div>
+      <img src="{{ $item.RelPermalink }}" class="{{ $img_class }}" />
+    </div>
+  {{ end }}
+  </div>
+</div>
