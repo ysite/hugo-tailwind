@@ -30,7 +30,7 @@ module.exports = {
     require('@tailwindcss/typography'),
     plugin(function ({ addBase, theme }) {
       addBase({
-        'html': { fontSize: "16px" },
+        'html': { fontSize: "18px" },
       })
     })
   ]

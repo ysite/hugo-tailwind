@@ -1,12 +1,12 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{{ block "title" . }}{{- .Title }} - {{ .Site.Title -}} {{ end }}</title>
-    {{ with .Params.Author }}
+    {{- with .Params.Author }}
     <meta name="author" content="{{ . }}" />
-    {{ end }}
+    {{- end }}
     <meta name="description" content="{{ with .Params.Description }}{{ . }}{{ else }}{{ .Site.Params.Description }}{{ end }}" />
     <meta name="keywords" content="{{ with .Params.Keywords }}{{ . }}{{ else }}{{ .Site.Params.Keywords }}{{ end }}" />
+    <title>{{ block "title" . }}{{- .Title }} - {{ .Site.Title -}} {{ end }}</title>
     {{ partialCached "css.html" . }}
 
     {{- $js := resources.Get "/js/theme-manager.js" | js.Build (dict "minify" "true" "format" .Site.Params.Jsformat ) }}
