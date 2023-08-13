@@ -1,5 +1,5 @@
 
-<svg class="{{ .class }} " viewBox="{{ .viewBox }}" xmlns="http://www.w3.org/2000/svg">
+<svg class="{{ .class }}" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
     <title>{{ .title }}</title>
     <polygon points="11 9 22 9 22 11 11 11 11 22 9 22 9 11 -2 11 -2 9 9 9 9 -2 11 -2"
         transform="rotate(45 10 10)" />

@@ -10,10 +10,10 @@
             <div>
                 <button type="button" id="theme-toogle" onclick="window.tm.changeTheme()"
                     class="hover:text-cyan-500">
-                    {{- partialCached "svg/theme-toggle-dark.svg"
-                    (dict "id" "theme-toggle-dark" "class" "hidden w-6 h-6" "fill" "currentColor" "viewBox" "0 0 16 16" ) }}
-                    {{- partialCached "svg/theme-toggle-light.svg"
-                    (dict "id" "theme-toggle-light" "class" "hidden w-6 h-6" "fill" "currentColor" "viewBox" "0 0 16 16" ) }}
+                    {{- partialCached "svg/theme/toggle-dark.svg"
+                    (dict "id" "theme-toggle-dark" "class" "hidden w-6 h-6 fill-current") }}
+                    {{- partialCached "svg/theme/toggle-light.svg"
+                    (dict "id" "theme-toggle-light" "class" "hidden w-6 h-6 fill-current") }}
                 </button>
                 <label class="sr-only">Switch Theme</label>
             </div>
