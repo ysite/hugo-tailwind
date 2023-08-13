@@ -1,9 +1,7 @@
-{{ $src := (shuffle (resources.Match (.Get "src" ))) }}
-{{ $alt := .Get "alt" }}
-
-{{ $ctr_class := .Get "ctr_class" }}
-{{ $img_class := .Get "img_class" }}
-
+{{- $src := (shuffle (resources.Match (.Get "src" ))) }}
+{{- $alt := .Get "alt" }}
+{{- $ctr_class := .Get "ctr_class" }}
+{{- $img_class := .Get "img_class" }}
 <div class="{{ $ctr_class }}">
 {{- range $item := $src }}
     <div>

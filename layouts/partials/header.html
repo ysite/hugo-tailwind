@@ -1,27 +1,26 @@
-<header class="w-screen px-6 py-6 mx-auto sm:px-5 xl:px-6 2xl:px-6">
-
-    <nav class="flex flex-col mx-auto">
+<header class="py-6">
+    <nav class="flex flex-col">
         <div class="flex justify-between">
-            <a href="{{ .Site.Home.Permalink }}" class="flex items-center text-slate-600 dark:text-slate-400">
-                <img class="w-auto h-16 sm:h-40" src="{{ .Site.Params.Logo }}" alt="{{ .Site.Params.Heading }}">
+            {{/*  logo  */}}
+            <a href="{{ .Site.Home.Permalink }}" class="flex items-center">
+                <img src="{{ .Site.Params.Logo }}" alt="{{ .Site.Params.Heading }}" class="h-16 sm:h-40" >
                 <span class="sr-only">{{ .Site.Params.Heading }}</span>
             </a>
-
+            {{/*  theme  */}}
             <div>
-                <label class="sr-only">Theme</label>
                 <button type="button" id="theme-toogle" onclick="window.tm.changeTheme()"
-                    class="py-1 hover:text-cyan-500 dark:hover:text-cyan-500">
-                    {{ partialCached "svg/theme-toggle-dark.svg"
+                    class="hover:text-cyan-500">
+                    {{- partialCached "svg/theme-toggle-dark.svg"
                     (dict "id" "theme-toggle-dark" "class" "hidden w-6 h-6" "fill" "currentColor" "viewBox" "0 0 16 16" ) }}
-                    {{ partialCached "svg/theme-toggle-light.svg"
+                    {{- partialCached "svg/theme-toggle-light.svg"
                     (dict "id" "theme-toggle-light" "class" "hidden w-6 h-6" "fill" "currentColor" "viewBox" "0 0 16 16" ) }}
                 </button>
+                <label class="sr-only">Switch Theme</label>
             </div>
         </div>
-
+        {{/*  menu  */}}
         <div class="flex justify-end cursor-pointer">
-            {{ partial "menu-head.html" (dict "menuID" "main" "page" .) }}
+            {{- partial "menu-head.html" (dict "menuID" "main" "page" .) }}
         </div>
-
     </nav>
 </header>
