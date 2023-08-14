@@ -13,7 +13,7 @@
   {{- range $item := $src }}
     <div class="mx-4 lg:mx-6">
       <div class="w-[180px] h-0"></div>
-      <img class="{{ $img_class }}" src="{{ $item.RelPermalink }}" alt="{{$alt}} {{ path.BaseName $item | humanize }}"/>
+      <img class="{{ $img_class }}" src="{{ $item.RelPermalink }}" width="{{ $item.Width }}" height="{{ $item.Height }}" alt="{{$alt}} {{ path.BaseName $item | humanize }}"/>
     </div>
   {{- end }}
   </div>
