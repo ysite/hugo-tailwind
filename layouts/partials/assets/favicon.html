@@ -1,0 +1,20 @@
+{{- $svg := "/favicon/favicon.svg" }}
+{{- $png := "/favicon/favicon.png" }}
+
+{{- with resources.Get (resources.Get $svg) }}
+  <link rel="icon" href="{{ .RelPermalink }}">
+  {{- with resources.Copy "/favicon/mask-icon.svg" . }}
+  <link rel="mask-icon" href="{{ .RelPermalink }}" color="#000000">
+  {{- end }}
+{{- end }}
+
+{{- with resources.Get (resources.Get $png) }}
+  {{- with resources.Copy "/favicon/apple-touch-icon.png" . }}
+  <link rel="apple-touch-icon" href="{{ .RelPermalink }}">
+  {{- end }}
+
+  {{- with .Resize (printf "%dx%d ico" .Width .Height) }}
+    {{- with resources.Copy "/favicon.ico" . }}
+    {{- end }}
+  {{- end }}
+{{- end }}
