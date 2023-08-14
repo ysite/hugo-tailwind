@@ -6,10 +6,10 @@
   </p>
 </footer>
 
-{{- $js := resources.Get "/js/theme-manager.js" | js.Build (dict "minify" "true" "format" .Site.Params.Jsformat ) }}
+{{- $theme_js := partial "assets/js.html" (dict "src" "/js/theme-manager.js" "page" .) }}
+
 <script type="module" async>
-  import { ThemeManager } from "{{ $js.RelPermalink }}";
+  import { ThemeManager } from "{{ $theme_js.RelPermalink }}";
   window.tm = new ThemeManager();
-  {{/*  let lfn = window.onload; window.onload = () => {if (lfn) lfn(); window.tm.setupThemeIndicator();};  */}}
   window.onload = window.tm.setupThemeIndicator();
 </script>

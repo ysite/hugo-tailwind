@@ -7,11 +7,11 @@
     <meta name="description" content="{{ with .Params.Description }}{{ . }}{{ else }}{{ .Site.Params.Description }}{{ end }}" />
     <meta name="keywords" content="{{ with .Params.Keywords }}{{ . }}{{ else }}{{ .Site.Params.Keywords }}{{ end }}" />
     <title>{{ block "title" . }}{{- .Title }} - {{ .Site.Title -}} {{ end }}</title>
-    {{ partialCached "css.html" . }}
-
-    {{- $js := resources.Get "/js/theme-manager.js" | js.Build (dict "minify" "true" "format" .Site.Params.Jsformat ) }}
+    {{ partialCached "assets/css.html" (dict "src" "css/styles.css" "page" .) }}
+    {{ partialCached "assets/fonts.html" . }}
+    {{- $theme_js := partial "assets/js.html" (dict "src" "/js/theme-manager.js" "page" .) }}
     <script type="module" async>
-        import {getThemeState} from "{{ $js.RelPermalink }}";
+        import {getThemeState} from "{{ $theme_js.RelPermalink }}";
         getThemeState();
     </script>
 </head>
