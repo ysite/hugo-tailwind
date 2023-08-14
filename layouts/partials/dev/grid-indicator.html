@@ -1,4 +1,4 @@
-{{ if .Site.IsServer }}
+{{ if not hugo.IsProduction }}
 <button id="grid-menu" onclick="changeGridVisibility()"
     class="block w-6 h-6 mb-1 text-xs text-blue-700 uppercase bg-blue-200 rounded-full pointer-events-auto">
     <span>G</span>

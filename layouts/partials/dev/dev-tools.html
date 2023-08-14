@@ -1,4 +1,4 @@
-{{ if .Site.IsServer }}
+{{ if not hugo.IsProduction }}
 <div class="fixed top-0 right-0 z-50 flex flex-col mt-12 -mr-1 gap-y-1">
     {{- partial "dev/size-indicator.html" . -}}
     {{- partial "dev/element-indicator.html" . -}}

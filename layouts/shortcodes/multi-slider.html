@@ -1,6 +1,7 @@
 {{/* https://codepen.io/studiojvla/pen/qVbQqW */}}
 {{/* https://codepen.io/t_afif/pen/PoedrGY  */}}
 {{- $title := .Get "title" }}
+{{- $alt := .Get "alt" }}
 {{- $tit_class := .Get "tit_class" }}
 {{- $bg_class := .Get "bg_class" }}
 {{- $ctr_class := .Get "ctr_class" }}
@@ -12,7 +13,7 @@
   {{- range $item := $src }}
     <div class="mx-4 lg:mx-6">
       <div class="w-[180px] h-0"></div>
-      <img src="{{ $item.RelPermalink }}" class="{{ $img_class }}" />
+      <img class="{{ $img_class }}" src="{{ $item.RelPermalink }}" alt="{{$alt}} {{ path.BaseName $item | humanize }}"/>
     </div>
   {{- end }}
   </div>

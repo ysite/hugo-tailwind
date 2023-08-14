@@ -1,4 +1,4 @@
-{{ if .Site.IsServer }}
+{{ if not hugo.IsProduction }}
 <button id="container-menu" onclick="logFonts()"
   class="block w-6 h-6 text-xs text-black uppercase border border-black rounded-full pointer-events-auto dark:border-white dark:text-white">
   <span>F</span>
