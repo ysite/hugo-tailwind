@@ -9,7 +9,7 @@
 
   {{- $js = resources.Get ( printf "%s" $src )}}
   {{- if not hugo.IsProduction -}}
-    {{- $js = $js | resources.ExecuteAsTemplate (replaceRE `(.*)(\.)` (printf "$1.dev.%v$2" now.UnixMilli) $src) $page -}}
+    {{- $js = $js | resources.ExecuteAsTemplate (replaceRE `(.*)(\.)` (printf "$1.dev.%v$2" now.Unix) $src) $page -}}
   {{- else -}}
     {{- $js = $js | js.Build (dict "minify" "true" "format" $page.Site.Params.Jsformat ) | fingerprint "sha512" }}
   {{- end -}}

@@ -3,7 +3,7 @@
 
 {{- $css := resources.Get ( printf "%s" $src ) | postCSS (dict "config" "./assets/css/postcss.config.js") -}}
 {{- if not hugo.IsProduction -}}
-    {{- $css = $css | resources.ExecuteAsTemplate (replaceRE `(.*)(\.)` (printf "$1.dev.%v$2" now.UnixMilli) $src) . -}}
+    {{- $css = $css | resources.ExecuteAsTemplate (replaceRE `(.*)(\.)` (printf "$1.dev.%v$2" now.Unix) $src) . -}}
 {{- else -}}
     {{- $css = $css | minify | fingerprint "sha512" | resources.PostProcess -}}
 {{- end -}}
