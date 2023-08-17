@@ -6,7 +6,7 @@
   {{- with index site.Menus $menuID }}
   <input id="menu-toggle" type=checkbox class="hidden">
   <ul id="nav-menu" class="menu-main">
-    {{- partial "inline/menu/walk.html" (dict "page" $page "menuEntries" .) }}
+    {{- partialCached "inline/menu/walk" (dict "page" $page "menuEntries" .) }}
   </ul>
   <label id="menu-open" for="menu-toggle" class="flex md:hidden">
       {{- partialCached "svg/menu/open.svg"
@@ -19,7 +19,7 @@
   {{- end }}
 </div>
 
-{{- define "partials/inline/menu/walk.html" }}
+{{- define "partials/inline/menu/walk" }}
   {{- $page := .page }}
   {{- range .menuEntries }}
     {{- $attrs := dict "href" .URL }}
@@ -35,7 +35,7 @@
         <ul class="menu-sub">
       {{- end }}
       {{- with .Children }}
-          {{- partial "inline/menu/walk.html" (dict "page" $page "menuEntries" .) }}
+          {{- partial "inline/menu/walk" (dict "page" $page "menuEntries" .) }}
       {{- end }}
       {{- if .HasChildren }}
         </ul>
