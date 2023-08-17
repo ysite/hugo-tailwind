@@ -1,9 +1,9 @@
-<header class="py-6">
+<header class="py-2">
     <nav class="flex flex-col">
         <div class="flex justify-between">
             {{/*  logo  */}}
             <a href="{{ .Site.Home.Permalink }}" class="flex items-center">
-                <img src="{{ .Site.Params.Logo }}" alt="{{ .Site.Params.Heading }}" class="h-16 sm:h-40" >
+                <img src="{{ .Site.Params.Logo }}" alt="{{ .Site.Params.Heading }}" class="h-16 md:h-40" >
                 <span class="sr-only">{{ .Site.Params.Heading }}</span>
             </a>
             {{/*  theme  */}}
@@ -20,7 +20,7 @@
         </div>
         {{/*  menu  */}}
         <div class="flex justify-end cursor-pointer">
-            {{- partial "menu-head.html" (dict "menuID" "main" "page" .) }}
+            {{- partialCached "menu-head" (dict "menuID" "main" "page" .) }}
         </div>
     </nav>
 </header>

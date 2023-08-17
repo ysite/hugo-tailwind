@@ -43,7 +43,7 @@
       (dict "id" "contact-phone" "class" "w-12 h-12 text-slate-800 dark:text-slate-200 fill-current" "viewBox" "0 0 128 128" ) }}
   </div>
   <div>
-    {{ partial "partials/inline/contact/cloak.html" ( dict "address" $phone ) }}
+    {{ partial "partials/inline/contact/cloak" ( dict "address" $phone ) }}
   </div>
 
   <div>
@@ -51,7 +51,7 @@
       (dict "id" "contact-mail" "class" "w-12 h-12 text-slate-800 dark:text-slate-200 fill-current" "viewBox" "0 0 128 128" ) }}
   </div>
   <div>
-    {{ partial "partials/inline/contact/cloak.html" ( dict "address" $mail ) }}
+    {{ partial "partials/inline/contact/cloak" ( dict "address" $mail ) }}
   </div>
 
   <div>
@@ -63,7 +63,7 @@
   </div>
 </div>
 
-{{- define "partials/inline/contact/cloak.html" -}}
+{{- define "partials/inline/contact/cloak" -}}
   {{- $address := .address | default 0 -}}
   {{- $parts := split $address "@" -}}
   {{- $user := (index $parts 0) -}}
