@@ -6,10 +6,4 @@
   </p>
 </footer>
 
-{{- $theme_js := partial "assets/js.html" (dict "src" "/js/theme-manager.js" "page" .) }}
-
-<script type="module" async>
-  import { ThemeManager } from "{{ $theme_js.RelPermalink }}";
-  window.tm = new ThemeManager();
-  window.onload = window.tm.setupThemeIndicator();
-</script>
+{{ partialCached "assets/js" (dict "src" "js/foot.js" "opt" "defer") "foot" }}

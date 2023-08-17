@@ -7,12 +7,9 @@
     <meta name="description" content="{{ with .Params.Description }}{{ . }}{{ else }}{{ .Site.Params.Description }}{{ end }}" />
     <meta name="keywords" content="{{ with .Params.Keywords }}{{ . }}{{ else }}{{ .Site.Params.Keywords }}{{ end }}" />
     <title>{{ block "title" . }}{{- .Title }} - {{ .Site.Title -}} {{ end }}</title>
-    {{ partialCached "assets/favicon.html" . }}
-    {{ partialCached "assets/css.html" (dict "src" "css/styles.css" "page" .) }}
-    {{ partialCached "assets/fonts.html" . }}
-    {{- $theme_js := partial "assets/js.html" (dict "src" "/js/theme-manager.js" "page" .) }}
-    <script type="module" async>
-        import {getThemeState} from "{{ $theme_js.RelPermalink }}";
-        getThemeState();
-    </script>
+    {{ partialCached "assets/favicon" . }}
+    {{ partialCached "assets/css" (dict "Page" . "src" "css/styles.css") }}
+    {{ partialCached "assets/fonts" . }}
+    {{ partialCached "assets/js" (dict "src" "js/head.js") "head" }}
+
 </head>

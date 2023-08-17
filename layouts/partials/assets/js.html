@@ -1,21 +1,18 @@
-{{- $src := .src }}
-{{- $page := .page }}
+{{- $src := .src -}}
+{{- $js := "" -}}
 
-{{- $js := "" }}
+{{- $js = resources.Get $src -}}
+{{- $opts := dict
+  "sourceMap" (cond hugo.IsProduction "" "inline")
+  "minify" hugo.IsProduction
+  "params" (dict "is_production" hugo.IsProduction )
+}}
+{{- if not hugo.IsProduction }}
+  {{- $opts = merge $opts (dict "targetpath" (replaceRE `(.*)(\.)` (printf "$1.dev.%v$2" now.Unix) $src)) }}
+{{- end }}
+{{- $js = $js | js.Build $opts }}
+{{- if hugo.IsProduction }}
+  {{- $js = $js | fingerprint }}
+{{- end }}
 
-{{- if $page.Scratch.Get ( printf "%s" $src ) -}}
-  {{- $js = ($page.Scratch.Get ( printf "%s" $src )) }}
-{{- else -}}
-
-  {{- $js = resources.Get ( printf "%s" $src )}}
-  {{- if not hugo.IsProduction -}}
-    {{- $js = $js | resources.ExecuteAsTemplate (replaceRE `(.*)(\.)` (printf "$1.dev.%v$2" now.Unix) $src) $page -}}
-  {{- else -}}
-    {{- $js = $js | js.Build (dict "minify" "true" "format" $page.Site.Params.Jsformat ) | fingerprint "sha512" }}
-  {{- end -}}
-
-  {{- $page.Scratch.Set ( printf "%s" $src ) $js }}
-
-{{- end -}}
-
-{{- return $js }}
+    <script src="{{ $js.RelPermalink }}" {{ if hugo.IsProduction }}integrity="{{ $js.Data.Integrity }}" {{ end }} {{.opt | safeHTMLAttr}}></script>
