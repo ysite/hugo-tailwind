@@ -1,19 +1,37 @@
 {{/* https://codepen.io/studiojvla/pen/qVbQqW */}}
 {{/* https://codepen.io/t_afif/pen/PoedrGY  */}}
-{{- $title := .Get "title" }}
+{{- $src := (shuffle (resources.Match (.Get "src" ))) }}
 {{- $alt := .Get "alt" }}
+{{- $attrs := .Get "attrs" }}
+{{- $title := .Get "title" }}
+{{- $lazy_from := .Get "lazy_from"}}
 {{- $tit_class := .Get "tit_class" }}
 {{- $bg_class := .Get "bg_class" }}
 {{- $ctr_class := .Get "ctr_class" }}
 {{- $img_class := .Get "img_class" }}
-{{- $src := (shuffle (resources.Match (.Get "src" ))) }}
+{{- $ctr_attrs := .Get "ctr_attrs" }}
+{{- $ctr_attrs = len (findRE `xclass="` $ctr_attrs) | safeHTMLAttr}}
+{{/*  {{- if gt 0 (len (findRE `xclass="` $ctr_attrs))}}
+  {{- $ctr_attrs = replaceRE `xclass="([^"].*)"` `yclass="relative overflow-hidden $1"` $ctr_attrs | safeHTMLAttr}}
+{{- else}}
+  {{- $ctr_attrs = printf "%s %s" `zclass="relative overflow-hidden"` $ctr_attrs | safeHTMLAttr}}
+{{- end}}  */}}
+{{/*  {{- $ctr_attrs = replaceRE `xclass="([^"])"` `xclass="relative overflow-hidden \1"` $ctr_attrs | safeHTMLAttr}}  */}}
 <div class="relative overflow-hidden {{ $ctr_class }}">
-  <h4 class="mb-6 text-center {{$tit_class}}">{{$title}}</h4>
+  <h4 class="mb-6 text-center {{$tit_class}}" {{$ctr_attrs}}>{{$title}}</h4>
   <div class="flex animate-[multi_120s_linear_infinite]">
-  {{- range $item := $src }}
+  {{- range $idx, $item := $src }}
+    {{- with $lazy_from}} {{- if ge $idx $lazy_from}}
+      {{- $attrs = printf "%s loading=lazy" $attrs }}
+    {{- end}} {{- end}}
     <div class="mx-4 lg:mx-6">
       <div class="w-[180px] h-0"></div>
-      <img class="{{ $img_class }}" src="{{ $item.RelPermalink }}" width="{{ $item.Width }}" height="{{ $item.Height }}" alt="{{$alt}} {{ path.BaseName $item | humanize }}"/>
+      <img src="{{ $item.RelPermalink }}"
+        {{- with $img_class}} class="{{ $img_class }}"{{end}}
+        {{- with $item.Width}} width="{{ $item.Width }}"{{end}}
+        {{- with $item.Height}} height="{{ $item.Height }}"{{end}}
+        {{- with $alt}} alt="{{$alt}} {{ path.BaseName $item | humanize }}"{{end}}
+        {{- with $attrs}} {{$attrs | safeHTMLAttr}}{{end}}/>
     </div>
   {{- end }}
   </div>

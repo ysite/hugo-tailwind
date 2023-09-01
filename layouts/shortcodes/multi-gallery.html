@@ -1,11 +1,21 @@
 {{- $src := (shuffle (resources.Match (.Get "src" ))) }}
 {{- $alt := .Get "alt" }}
+{{- $attrs := .Get "attrs" }}
+{{- $lazy_from := .Get "lazy_from"}}
 {{- $ctr_class := .Get "ctr_class" }}
 {{- $img_class := .Get "img_class" }}
 <div class="{{ $ctr_class }}">
-{{- range $item := $src }}
+  {{- range $idx, $item := $src }}
+    {{- with $lazy_from}} {{- if ge $idx $lazy_from}}
+      {{- $attrs = printf "%s loading=lazy" $attrs }}
+    {{- end}} {{- end}}
     <div>
-      <img class="{{ $img_class }}" src="{{ $item.RelPermalink }}" width="{{ $item.Width }}" height="{{ $item.Height }}" alt="{{$alt}} {{ path.BaseName $item | humanize }}" />
+      <img src="{{ $item.RelPermalink }}"
+        {{- with $img_class}} class="{{ $img_class }}"{{end}}
+        {{- with $item.Width}} width="{{ $item.Width }}"{{end}}
+        {{- with $item.Height}} height="{{ $item.Height }}"{{end}}
+        {{- with $alt}} alt="{{$alt}} {{ path.BaseName $item | humanize }}"{{end}}
+        {{- with $attrs}} {{$attrs | safeHTMLAttr}}{{end}}/>
     </div>
 {{- end }}
 </div>
