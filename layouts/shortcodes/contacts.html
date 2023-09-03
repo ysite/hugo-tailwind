@@ -1,12 +1,16 @@
 {{- $title := .Get "title" }}
-{{- $phone := .Get "phone" }}
-{{- $mail := .Get "mail" }}
+{{- $id := .Get "id" }}
+{{- $phones := split (.Get "phone") "|" }}
+{{- $mails := split (.Get "mail") "|" }}
 {{- $linkedin := .Get "linkedin" }}
 
 <hr />
 
+{{- with $title}} <h2 {{- with $id}} id="{{ $id }}" {{end -}}>{{ $title }}</h2> {{end -}}
+
 <form action='{{ .Get "form" }}' method="post">
-  <div class="grid max-w-full grid-flow-row grid-cols-1 mt-10 lg:max-w-5xl lg:grid-cols-2 gap-y-2 lg:gap-x-6 lg:gap-y-8">
+  <div
+    class="grid max-w-full grid-flow-row grid-cols-1 mt-10 lg:max-w-5xl lg:grid-cols-2 gap-y-2 lg:gap-x-6 lg:gap-y-8">
     <label for="name" class="block text-sm font-medium leading-6 text-slate-800 dark:text-slate-200">
       Name
     </label>
@@ -36,42 +40,44 @@
 
 <hr />
 
-<h1>{{ $title }}</h1>
 <div class="grid grid-flow-row grid-cols-2 mt-10 gap-x-6 gap-y-8">
+  {{- range $phone := $phones }}
   <div>
-    {{ partialCached "svg/contact/phone.svg"
-      (dict "id" "contact-phone" "class" "w-12 h-12 text-slate-800 dark:text-slate-200 fill-current" "viewBox" "0 0 128 128" ) }}
+    {{ partialCached "svg/contact/phone.svg" (dict "id" "contact-phone" "class" "w-12 h-12 text-slate-800 dark:text-slate-200 fill-current" "viewBox" "0 0 128 128" ) }}
   </div>
   <div>
     {{ partial "partials/inline/contact/cloak" ( dict "address" $phone ) }}
   </div>
+  {{end -}}
 
+  {{- range $mail := $mails }}
   <div>
-    {{ partialCached "svg/contact/mail.svg"
-      (dict "id" "contact-mail" "class" "w-12 h-12 text-slate-800 dark:text-slate-200 fill-current" "viewBox" "0 0 128 128" ) }}
+    {{ partialCached "svg/contact/mail.svg" (dict "id" "contact-mail" "class" "w-12 h-12 text-slate-800 dark:text-slate-200 fill-current" "viewBox" "0 0 128 128" ) }}
   </div>
   <div>
     {{ partial "partials/inline/contact/cloak" ( dict "address" $mail ) }}
   </div>
+  {{end -}}
 
+  {{- with $linkedin}}
   <div>
-    {{ partialCached "svg/contact/linkedin.svg"
-      (dict "id" "contact-linkedin" "class" "w-12 h-12 text-slate-800 dark:text-slate-200 fill-current" "viewBox" "0 0 128 128" ) }}
+    {{ partialCached "svg/contact/linkedin.svg" (dict "id" "contact-linkedin" "class" "w-12 h-12 text-slate-800 dark:text-slate-200 fill-current" "viewBox" "0 0 128 128" ) }}
   </div>
   <div>
     <a href="{{ $linkedin }}">LinkedIn: {{ $title }}</a>
   </div>
+  {{end -}}
 </div>
 
 {{- define "partials/inline/contact/cloak" -}}
-  {{- $address := .address | default 0 -}}
-  {{- $parts := split $address "@" -}}
-  {{- $user := (index $parts 0) -}}
-  {{- $domain := (index $parts 1) | default "" }}
-  <div class="{{- with $domain -}} data-d {{- else -}} data-u {{- end -}}">
-    <span {{ with $domain -}}
-      data-d="{{- range $index := seq (sub (len $domain) 1) 0 -}} {{- substr $domain $index 1 -}} {{- end -}}" {{ end -}}
-      data-u="{{- range $index := seq (sub (len $user) 1) 0 -}}{{- substr $user $index 1 -}}{{- end -}}">
-    </span>
-  </div>
+{{- $address := .address | default 0 -}}
+{{- $parts := split $address "@" -}}
+{{- $user := (index $parts 0) -}}
+{{- $domain := (index $parts 1) | default "" }}
+<div class="{{- with $domain -}} data-d {{- else -}} data-u {{- end -}}">
+  <span {{ with $domain -}}
+    data-d="{{- range $index := seq (sub (len $domain) 1) 0 -}} {{- substr $domain $index 1 -}} {{- end -}}" {{ end -}}
+    data-u="{{- range $index := seq (sub (len $user) 1) 0 -}}{{- substr $user $index 1 -}}{{- end -}}">
+  </span>
+</div>
 {{- end -}}
